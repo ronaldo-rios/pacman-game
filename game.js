@@ -47,18 +47,29 @@ let map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ]
 
+let createNewPacman = () => {
+    pacman = new Pacman(
+        oneBlockSize,
+        oneBlockSize,
+        oneBlockSize,
+        oneBlockSize,
+        oneBlockSize / 5
+    )
+}
+
 let gameLoop = () => {
     update()
     draw()
 }
 
 let update = () => {
-
+    pacman.moveProcess()
 }
 
 let draw = () => {
     createRect(0, 0, canvas.width, canvas.height, '#000')
     drawWalls()
+    pacman.draw()
 }
 
 let gameInterval = setInterval(gameLoop, 1000 / fps)
@@ -114,3 +125,20 @@ let drawWalls = () => {
         }
     }
 }
+
+createNewPacman()
+gameLoop()
+
+window.addEventListener('keydown', (e) => {
+    setTimeout(() => {
+        if (e.code === 'ArrowLeft' || e.code === 'KeyA') { // left
+            pacman.nextDirection = LEFT_DIRECTION
+        } else if (e.code === 'ArrowUp' || e.code === 'KeyW') { // up
+            pacman.nextDirection = UP_DIRECTION
+        } else if (e.code === 'ArrowRight' || e.code === 'KeyD') { // right
+            pacman.nextDirection = RIGHT_DIRECTION
+        } else if (e.code === 'ArrowDown' || e.code === 'KeyS') { // down
+            pacman.nextDirection = BOTTOM_DIRECTION
+        }
+    })
+})

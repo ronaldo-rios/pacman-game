@@ -4,11 +4,11 @@ class Pacman {
         this.y = y
         this.width = width
         this.height = height
-        this.speed = speed,
-        this.direction = RIGHT_DIRECTION,
-        this.nextDirection = this.direction,
-        this.currentFrame = 1,
-        this.frameCount = 7, // quantity in animations.gif
+        this.speed = speed
+        this.direction = RIGHT_DIRECTION
+        this.nextDirection = this.direction
+        this.currentFrame = 1
+        this.frameCount = 7 // quantity in animations.gif
         setInterval(() => this.changeAnimation(), 100)
     }
 
@@ -22,7 +22,14 @@ class Pacman {
     }
 
     eat() {
-
+        for(let i = 0; i < map.length; i++){
+            for(let j = 0; j < map[0].length; j++) {
+                if (map[i][j] == 2 && this.getMapX() == j && this.getMapY() == i) {
+                    map[i][j] = 3
+                    score++
+                }
+            }
+        }
     }
 
     moveBackwards() {
@@ -74,7 +81,16 @@ class Pacman {
     }
 
     checkGhostCollision() {
-
+         for (let i = 0; i < ghosts.length; i++) {
+            let ghost = ghosts[i]
+            if (
+                ghost.getMapX() == this.getMapX() &&
+                ghost.getMapY() == this.getMapY()
+            ) {
+                return true
+            }
+        }
+        return false
     }
 
     changeDirectionIfPossible() {
@@ -131,10 +147,10 @@ class Pacman {
     }
 
     getMapXRightSide() {
-        return parseInt((this.x + 0.9999 * oneBlockSize) / oneBlockSize)
+        return parseInt((this.x + 0.99 * oneBlockSize) / oneBlockSize)
     }
 
     getMapYRightSide() {
-        return parseInt((this.y + 0.9999 * oneBlockSize) / oneBlockSize)
+        return parseInt((this.y + 0.99 * oneBlockSize) / oneBlockSize)
     }
 }
